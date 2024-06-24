@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="deviceConnectionString" xml:space="preserve">
-    <value>HostName=CwIOT.azure-devices.net;SharedAccessKeyName=device;SharedAccessKey=OaQGpHAj19uq7KM97YiULk1YhOEAdWgLrAIoTNit9y8=</value>
+    <value>HostName=CwIOT</value>
   </data>
   <data name="iotDevicesMaxCount" xml:space="preserve">
     <value>100</value>
@@ -127,6 +127,6 @@
     <value>opc.tcp://localhost:4840/</value>
   </data>
   <data name="ownerConnectionString" xml:space="preserve">
-    <value>HostName=CwIOT.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=zABzl7cA1xoEbgRgx2Wvhq0HIuUkehh0vAIoTB1wBhI=</value>
+    <value>HostName=CwIOT.azure-devices.net=</value>
   </data>
 </root>
