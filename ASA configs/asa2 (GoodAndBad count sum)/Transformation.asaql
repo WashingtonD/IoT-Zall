@@ -1,0 +1,9 @@
+/*
+Here are links to help you get started with Stream Analytics Query Language:
+Common query patterns - https://go.microsoft.com/fwLink/?LinkID=619153
+Query language - https://docs.microsoft.com/stream-analytics-query/query-language-elements-azure-stream-analytics
+*/
+SELECT System.Timestamp() log_time, workorder_id, MAX(good_count) as good_count_sum, MAX(bad_count) as bad_count_sum
+ INTO [asa-out-aggreg-counts] FROM [CwIOT] WHERE
+workorder_id IS NOT NULL GROUP BY workorder_id, TumblingWindow(minute, 2)
+    

@@ -1,0 +1,122 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "For_each": {
+                "actions": {
+                    "Send_Email_V2": {
+                        "inputs": {
+                            "body": {
+                                "Body": "<p>Emergency stop time: @{items('For_each')?['emergency_stop_time']}<br>\nDevice ID: @{items('For_each')?['deviceId']}<br>\nError sum: @{items('For_each')?['error_sum']}</p>",
+                                "Importance": "Normal",
+                                "Subject": "Error Report for Device @{items('For_each')?['deviceId']}",
+                                "To": ""
+                            },
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['outlook']['connectionId']"
+                                }
+                            },
+                            "method": "post",
+                            "path": "/v2/Mail"
+                        },
+                        "type": "ApiConnection"
+                    }
+                },
+                "foreach": "@body('Parse_JSON')?['allEvents']",
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@decodeBase64(triggerBody()['ContentData'])",
+                    "schema": {
+                        "properties": {
+                            "allEvents": {
+                                "items": {
+                                    "properties": {
+                                        "deviceId": {
+                                            "type": "string"
+                                        },
+                                        "emergency_stop_time": {
+                                            "type": "string"
+                                        },
+                                        "error_sum": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "emergency_stop_time",
+                                        "deviceId",
+                                        "error_sum"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {},
+                "type": "ParseJson"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "When_one_or_more_messages_arrive_in_a_queue_auto_complete": {
+                "conditions": [],
+                "evaluatedRecurrence": {
+                    "frequency": "Minute",
+                    "interval": 3
+                },
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['servicebus']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/@{encodeURIComponent(encodeURIComponent('device-errors-bus'))}/messages/batch/head",
+                    "queries": {
+                        "maxMessageCount": 20,
+                        "queueType": "Main"
+                    }
+                },
+                "recurrence": {
+                    "frequency": "Minute",
+                    "interval": 3
+                },
+                "splitOn": "@triggerBody()",
+                "type": "ApiConnection"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "outlook": {
+                    "connectionId": "/subscriptions/0bdb1c13-8b41-48b9-8ff1-7e6460a35701/resourceGroups/Zajecia_WMiI_UL/providers/Microsoft.Web/connections/outlook",
+                    "connectionName": "outlook",
+                    "id": "/subscriptions/0bdb1c13-8b41-48b9-8ff1-7e6460a35701/providers/Microsoft.Web/locations/westeurope/managedApis/outlook"
+                },
+                "servicebus": {
+                    "connectionId": "/subscriptions/0bdb1c13-8b41-48b9-8ff1-7e6460a35701/resourceGroups/Zajecia_WMiI_UL/providers/Microsoft.Web/connections/servicebus",
+                    "connectionName": "servicebus",
+                    "id": "/subscriptions/0bdb1c13-8b41-48b9-8ff1-7e6460a35701/providers/Microsoft.Web/locations/westeurope/managedApis/servicebus"
+                }
+            }
+        }
+    }
+}

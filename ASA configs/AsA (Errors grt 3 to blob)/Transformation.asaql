@@ -1,0 +1,9 @@
+/*
+Here are links to help you get started with Stream Analytics Query Language:
+Common query patterns - https://go.microsoft.com/fwLink/?LinkID=619153
+Query language - https://docs.microsoft.com/stream-analytics-query/query-language-elements-azure-stream-analytics
+*/
+SELECT System.Timestamp() emergency_stop_time, machine_id, SUM(COALESCE(emergency_stop,0)) + SUM(COALESCE(power_failure,0)) + SUM(COALESCE(sensor_failure,0)) + SUM(COALESCE(unknown,0)) as error_sum 
+INTO [asa-out-emergency-stops] 
+FROM [CwIOT] 
+GROUP BY machine_id, TumblingWindow(minute, 15) HAVING error_sum > 3

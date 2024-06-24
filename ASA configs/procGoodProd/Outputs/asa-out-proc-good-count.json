@@ -1,0 +1,25 @@
+{
+    "Name": "asa-out-proc-good-count",
+    "DataSourceType": "Blob Storage",
+    "BlobStorageProperties": {
+        "StorageAccounts": [
+            {
+                "AccountName": "storageacc2402",
+                "AccountKey": null
+            }
+        ],
+        "Container": "asa-out-proc-good-count",
+        "PathPattern": "",
+        "DateFormat": "yyyy/MM/dd",
+        "TimeFormat": "HH",
+        "AuthenticationMode": "ConnectionString",
+        "BlobWriteMode": "Append"
+    },
+    "DataSourceCredentialDomain": null,
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8",
+        "Format": "LineSeparated"
+    },
+    "ScriptType": "Output"
+}

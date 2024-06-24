@@ -1,0 +1,6 @@
+
+SELECT System.Timestamp() log_time, machine_id, MAX(temperature) as temperature_max, MIN(temperature) as temperature_min, 
+AVG(temperature) as temperature_avg 
+INTO [asa-out-temp] 
+FROM [CwIOT] 
+GROUP BY machine_id, TumblingWindow(minute, 5)

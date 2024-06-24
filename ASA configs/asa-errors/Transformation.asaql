@@ -1,0 +1,9 @@
+SELECT System.Timestamp() AS log_time, 
+    machine_id, 
+    SUM(COALESCE(emergency_stop, 0)) AS emergency_stop_count, 
+    SUM(COALESCE(power_failure, 0)) AS power_failure_count, 
+    SUM(COALESCE(sensor_failure, 0)) AS sensor_failure_count,
+    SUM(COALESCE(unknown, 0)) AS unknown_error_count 
+INTO [asa-out-errors] 
+FROM [CwIOT] 
+GROUP BY machine_id, TumblingWindow(minute, 30)

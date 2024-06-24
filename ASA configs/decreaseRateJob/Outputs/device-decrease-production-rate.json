@@ -1,0 +1,19 @@
+{
+    "Name": "device-decrease-production-rate",
+    "DataSourceType": "Service Bus Queue",
+    "ServiceBusQueueProperties": {
+        "ServiceBusNamespace": "opc-device-service-bus",
+        "SharedAccessPolicyName": "RootManageSharedAccessKey",
+        "QueueName": "device-decrease-production-rate",
+        "PropertyColumns": [],
+        "SystemPropertyColumns": {},
+        "SharedAccessPolicyKey": null
+    },
+    "DataSourceCredentialDomain": null,
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8",
+        "Format": "LineSeparated"
+    },
+    "ScriptType": "Output"
+}

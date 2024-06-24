@@ -1,0 +1,6 @@
+SELECT System.Timestamp() emergency_stop_time, deviceId, 
+SUM(COALESCE(emergency_stop,0)) + SUM(COALESCE(power_failure,0)) + SUM(COALESCE(sensor_failure,0)) + SUM(COALESCE(unknown,0)) as error_sum 
+INTO [device-errors-bus]
+FROM [CwIOT]
+GROUP BY deviceId, TumblingWindow(minute, 15) HAVING error_sum > 3
+    

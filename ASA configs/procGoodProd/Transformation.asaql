@@ -1,0 +1,4 @@
+SELECT System.Timestamp() log_time, machine_id, (MAX(good_count)*100)/(MAX(good_count)+MAX(bad_count)) as proc_of_good_production 
+INTO [asa-out-proc-good-count] 
+FROM [CwIOT] 
+GROUP BY machine_id, TumblingWindow(minute, 15)

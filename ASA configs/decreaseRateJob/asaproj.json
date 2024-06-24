@@ -1,0 +1,10 @@
+{
+    "name": "decreaseRateJob",
+    "startFile": "Transformation.asaql",
+    "configurations": [
+        {
+            "filePath": "JobConfig.json",
+            "subType": "JobConfig"
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "Name": "CwIOT",
+    "Type": "Data Stream",
+    "DataSourceType": "IoT Hub",
+    "IoTHubProperties": {
+        "IotHubNamespace": "CwIOT",
+        "SharedAccessPolicyName": "iothubowner",
+        "ConsumerGroupName": "$Default",
+        "Endpoint": "messages/events",
+        "SharedAccessPolicyKey": null
+    },
+    "PartitionKey": null,
+    "DataSourceCredentialDomain": null,
+    "Serialization": {
+        "Type": "Json",
+        "Encoding": "UTF8"
+    },
+    "CompressionType": "None",
+    "ScriptType": "Input"
+}

@@ -1,0 +1,10 @@
+/*
+Here are links to help you get started with Stream Analytics Query Language:
+Common query patterns - https://go.microsoft.com/fwLink/?LinkID=619153
+Query language - https://docs.microsoft.com/stream-analytics-query/query-language-elements-azure-stream-analytics
+*/
+SELECT System.Timestamp() time, deviceId INTO [device-decrease-production-rate] 
+FROM [CwIOT]
+GROUP BY deviceId, TumblingWindow(minute, 15) 
+HAVING (MAX(good_count)*100)/(MAX(good_count)+MAX(bad_count)) < 90
+    
